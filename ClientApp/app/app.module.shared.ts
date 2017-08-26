@@ -4,6 +4,8 @@ import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
 
+import { DataTableModule } from "angular2-datatable";
+
 import { AppComponent } from './components/app/app.component';
 import { ExpensesComponent } from './components/expenses/expenses.component';
 
@@ -16,6 +18,7 @@ import { ExpensesComponent } from './components/expenses/expenses.component';
         CommonModule,
         HttpModule,
         FormsModule,
+        DataTableModule,
         RouterModule.forRoot([
             { path: '', redirectTo: 'expenses', pathMatch: 'full' },
             { path: 'expenses', component: ExpensesComponent },

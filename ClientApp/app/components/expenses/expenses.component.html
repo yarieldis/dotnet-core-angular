@@ -2,23 +2,27 @@
 
 <p>This section will manage expense data stored on the server.</p>
 
-<p *ngIf="!expenses"><em>Loading...</em></p>
-
-<table class='table' *ngIf="expenses">
+<p *ngIf="!data"><em>Loading...</em></p>
+<a href="#" class="btn btn-primary btn-add-new">Add New</a>
+<table class='table table-bordered table-expenses' *ngIf="data" [mfData]="data" #mf="mfDataTable">
     <thead>
         <tr>
-            <th>Description</th>
-            <th>Amount ($)</th>
-            <th>Date</th>
-            <th>Type</th>
+            <th><mfDefaultSorter by="description">Description</mfDefaultSorter></th>
+            <th><mfDefaultSorter by="amount">Amount ($)</mfDefaultSorter></th>
+            <th><mfDefaultSorter by="date">Date</mfDefaultSorter></th>
+            <th><mfDefaultSorter by="type">Type</mfDefaultSorter></th>
+            <th></th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
-        <tr *ngFor="let expense of expenses">
+        <tr *ngFor="let expense of mf.data">
             <td>{{ expense.description }}</td>
             <td>{{ expense.amount }}</td>
             <td>{{ expense.date }}</td>
             <td>{{ expense.type }}</td>
+            <td><a href="#">Edit</a></td>
+            <td><a href="#">Delete</a></td>
         </tr>
     </tbody>
 </table>

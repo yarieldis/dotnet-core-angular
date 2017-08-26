@@ -1,0 +1,13 @@
+.btn-add-new {
+    margin-bottom: 5px;
+    float: right;
+}
+
+.table-expenses th {
+    background-color: lightgray;
+    color: white;
+}
+
+.table-expenses :first-child {
+    width: 40%;
+}

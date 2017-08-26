@@ -18,8 +18,8 @@ namespace test_angular.Controllers
             "Leisure", "Insurance", "Education", "Medical"
         };
 
-        [HttpGet()]
-        public IEnumerable<Expenditure> Index()
+        [HttpGet]
+        public IEnumerable<Expenditure> Get()
         {
             var rng = new Random();
             return Enumerable.Range(1, 5).Select(index => new Expenditure
@@ -29,6 +29,30 @@ namespace test_angular.Controllers
                 Date = DateTime.Now.AddDays(index).ToString("d"),
                 Type = Types[rng.Next(Types.Length)]
             });
+        }
+
+        [HttpGet("{id}")]
+        public Expenditure Get(int id)
+        {
+            return null;
+        }
+
+        [HttpPost]
+        public void Post([FromBody]Expenditure value)
+        {
+
+        }
+
+        [HttpPut("{id}")]
+        public void Put(int id, [FromBody]Expenditure value)
+        {
+
+        }
+
+        [HttpDelete("{id}")]
+        public void Delete(int id)
+        {
+            
         }
 
         public class Expenditure
