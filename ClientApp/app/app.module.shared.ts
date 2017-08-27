@@ -6,6 +6,7 @@ import { RouterModule } from '@angular/router';
 
 import { DataTableModule } from "angular2-datatable";
 import { SelectModule } from "ng-select";
+import { MyDatePickerModule } from 'mydatepicker';
 
 import { AppComponent } from './components/app/app.component';
 import { ExpensesComponent } from './components/expenses/expenses.component';
@@ -21,6 +22,7 @@ import { ExpensesComponent } from './components/expenses/expenses.component';
         FormsModule,
         DataTableModule,
         SelectModule,
+        MyDatePickerModule,
         RouterModule.forRoot([
             { path: '', redirectTo: 'expenses', pathMatch: 'full' },
             { path: 'expenses', component: ExpensesComponent },

@@ -36,6 +36,7 @@
     "isomorphic-fetch": "2.2.1",
     "jquery": "3.2.1",
     "json-loader": "0.5.4",
+    "mydatepicker": "^2.0.27",
     "ng-select": "^1.0.0-beta.6",
     "preboot": "4.5.2",
     "raw-loader": "0.5.1",
