@@ -2,6 +2,14 @@
 
 <p>This section will manage expense data stored on the server.</p>
 
+<ng-select
+[options]="types"
+[(ngModel)]="value">
+</ng-select>
+
+<my-date-picker name="mydate" [options]="myDatePickerOptions"
+[(ngModel)]="model" required></my-date-picker>
+
 <p *ngIf="!data"><em>Loading...</em></p>
 <a href="#" class="btn btn-primary btn-add-new">Add New</a>
 <table class='table table-bordered table-expenses' *ngIf="data" [mfData]="data" #mf="mfDataTable">
@@ -26,3 +34,5 @@
         </tr>
     </tbody>
 </table>
+
+<p>{{value}}</p>
