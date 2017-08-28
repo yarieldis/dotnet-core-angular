@@ -69,17 +69,21 @@ export class ExpensesComponent {
         this.modalService.close(id);
     }
 
-    reload(){
+    private reload(){
+        this.clear();
         this.data = [];
+        
+        this.http.get(this.baseUrl + 'api/Expenses').subscribe(result => {
+            this.data = result.json() as Expenditure[];
+        }, error => console.error(error));
+    }
+
+    private clear(){
         this.expenseId = 0;
         this.description = '';
         this.amount = 0;
         this.currentDate = { date: {year:0, month: 0, day: 0} };
         this.type = '';
-
-        this.http.get(this.baseUrl + 'api/Expenses').subscribe(result => {
-            this.data = result.json() as Expenditure[];
-        }, error => console.error(error));
     }
 
     delete(modalId: string, expenseId: number){
@@ -114,6 +118,7 @@ export class ExpensesComponent {
 
     closeModal(id: string){
         this.modalService.close(id);
+        this.clear();
     }
 }
 
