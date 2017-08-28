@@ -27,6 +27,7 @@ export class ExpensesComponent {
         showClearDateBtn: false
     };
 
+    public expenseId = 0;
     public description: string = '';
     public amount: number = 0;
     private currentDate: DateFormat = { date: {year:0, month: 0, day: 0} };
@@ -49,7 +50,7 @@ export class ExpensesComponent {
             date: this.currentDate.date.year + '-' + this.currentDate.date.month + '-' + this.currentDate.date.day,
             type: this.type
         } as Expenditure;
-        
+
         this.http.post(this.baseUrl + 'api/Expenses', expense).subscribe(result => {
             this.data = [];
             
@@ -64,6 +65,25 @@ export class ExpensesComponent {
 
         }, error => console.error(error));
         this.modalService.close(id);
+    }
+
+    delete(modalId: string, expenseId: number){
+        this.http.delete(this.baseUrl + 'api/Expenses/' + expenseId).subscribe(result => {
+            this.data = [];
+
+            this.expenseId = 0;
+            
+            this.http.get(this.baseUrl + 'api/Expenses').subscribe(result => {
+                this.data = result.json() as Expenditure[];
+            }, error => console.error(error));
+
+        }, error => console.error(error));
+        this.modalService.close(modalId);
+    }
+
+    openDeleteModal(modalId: string, expenseId: number){
+        this.expenseId = expenseId;
+        this.modalService.open(modalId);
     }
 
     openModal(id: string){
