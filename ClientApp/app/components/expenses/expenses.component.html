@@ -27,11 +27,48 @@
 <modal id="custom-modal-1">
     <div class="modal">
         <div class="modal-body">
-            <h1>A Custom Modal!</h1>
-            <p>
-                Home page text
-            </p>
-            <button (click)="closeModal('custom-modal-1');">Close</button>
+            <div class="container">
+                <h1 class="well">Add Expense</h1>
+                <div class="row">
+                    <div class="col-md-2"></div>
+                    <div class="col-md-8">
+                        <div class="row">
+                            <div class="col-md-6">Description</div>
+                            <div class="col-md-6">
+                                <input [(ngModel)]="description" class="form-control input-md" type="text">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">Amount</div>
+                            <div class="col-md-6">
+                                <input [(ngModel)]="amount" class="form-control input-md" type="text">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">Date</div>
+                            <div class="col-md-6">
+                                <my-date-picker name="mydate" [options]="myDatePickerOptions"
+                                    [(ngModel)]="currentDate" required></my-date-picker>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">Type</div>
+                            <div class="col-md-6">
+                                <ng-select
+                                    [options]="types"
+                                    [(ngModel)]="type">
+                                </ng-select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-2"></div>
+                </div>
+                <br/>
+                <div class="well">
+                    <button class="btn btn-success" (click)="save('custom-modal-1');">Save</button>
+                    <button class="btn btn-danger" (click)="closeModal('custom-modal-1');">Cancel</button>
+                </div>
+            </div>
         </div>
     </div>
     <div class="modal-background"></div>

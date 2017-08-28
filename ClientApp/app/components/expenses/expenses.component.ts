@@ -13,11 +13,50 @@ import { ModalService } from '../modal/modal.service';
 })
 export class ExpensesComponent {
     public data: Expenditure[];
+    
+    types: Array<IOption> = [
+        {label: 'Leisure', value: 'Leisure'},
+        {label: 'Insurance', value: 'Insurance'},
+        {label: 'Education', value: 'Education'},
+        {label: 'Medical', value: 'Medical'}
+    ];
+    
+    private myDatePickerOptions: IMyDpOptions = {
+        editableDateField: false,
+        dateFormat: 'yyyy-mm-dd',
+        showClearDateBtn: false
+    };
 
-    constructor(private modalService: ModalService, http: Http, @Inject('BASE_URL') baseUrl: string) {
+    public description: string = '';
+    public amount: number = 0;
+    private currentDate: DateFormat = { date: {year:0, month: 0, day: 0} };
+    public type: string = '';
+    
+    constructor(
+        private modalService: ModalService,
+        private http: Http,
+        @Inject('BASE_URL') private baseUrl: string
+    ){
         http.get(baseUrl + 'api/Expenses').subscribe(result => {
             this.data = result.json() as Expenditure[];
         }, error => console.error(error));
+    }
+
+    save(id: string){
+        var expense = {
+            description: this.description,
+            amount: this.amount,
+            date: this.currentDate.date.year + '-' + this.currentDate.date.month + '-' + this.currentDate.date.day,
+            type: this.type
+        } as Expenditure;
+        console.log(expense);
+        this.http.post(this.baseUrl + 'api/Expenses', expense).subscribe(result => {
+            this.data = [];
+            this.http.get(this.baseUrl + 'api/Expenses').subscribe(result => {
+                this.data = result.json() as Expenditure[];
+            }, error => console.error(error));
+        }, error => console.error(error));
+        this.modalService.close(id);
     }
 
     openModal(id: string){
@@ -29,6 +68,13 @@ export class ExpensesComponent {
     }
 }
 
+interface DateFormat {
+    date: {
+    year: number;
+    month: number;
+    day: number;
+    };
+}
 interface Expenditure {
     id: number;
     description: string;
