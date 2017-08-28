@@ -30,6 +30,7 @@ export class ExpensesComponent {
 }
 
 interface Expenditure {
+    id: number;
     description: string;
     amount: number;
     date: string;
