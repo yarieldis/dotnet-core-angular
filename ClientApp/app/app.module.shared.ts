@@ -10,10 +10,14 @@ import { MyDatePickerModule } from 'mydatepicker';
 
 import { AppComponent } from './components/app/app.component';
 import { ExpensesComponent } from './components/expenses/expenses.component';
+import { ModalComponent } from './components/modal/modal.component';
+
+import { ModalService } from './components/modal/modal.service';
 
 @NgModule({
     declarations: [
         AppComponent,
+        ModalComponent,
         ExpensesComponent
     ],
     imports: [
@@ -28,7 +32,8 @@ import { ExpensesComponent } from './components/expenses/expenses.component';
             { path: 'expenses', component: ExpensesComponent },
             { path: '**', redirectTo: 'expenses' }
         ])
-    ]
+    ],
+    providers: [ ModalService ]
 })
 export class AppModuleShared {
 }
