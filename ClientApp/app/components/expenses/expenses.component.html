@@ -1,6 +1,6 @@
 <h1>Manage Expenses</h1>
 <p *ngIf="!data"><em>Loading...</em></p>
-<a href="#" class="btn btn-primary btn-add-new">Add New</a>
+<button (click)="openModal('custom-modal-1')" class="btn btn-primary btn-add-new">Add New</button>
 <table class='table table-bordered table-expenses' *ngIf="data" [mfData]="data" #mf="mfDataTable">
     <thead>
         <tr>
@@ -18,8 +18,21 @@
             <td>{{ expense.amount }}</td>
             <td>{{ expense.date }}</td>
             <td>{{ expense.type }}</td>
-            <td><a href="#">Edit</a></td>
-            <td><a href="#">Delete</a></td>
+            <td><button class="btn">Edit</button></td>
+            <td><button class="btn btn-danger">Delete</button></td>
         </tr>
     </tbody>
 </table>
+
+<modal id="custom-modal-1">
+    <div class="modal">
+        <div class="modal-body">
+            <h1>A Custom Modal!</h1>
+            <p>
+                Home page text
+            </p>
+            <button (click)="closeModal('custom-modal-1');">Close</button>
+        </div>
+    </div>
+    <div class="modal-background"></div>
+</modal>
