@@ -49,12 +49,19 @@ export class ExpensesComponent {
             date: this.currentDate.date.year + '-' + this.currentDate.date.month + '-' + this.currentDate.date.day,
             type: this.type
         } as Expenditure;
-        console.log(expense);
+        
         this.http.post(this.baseUrl + 'api/Expenses', expense).subscribe(result => {
             this.data = [];
+            
+            this.description = '';
+            this.amount = 0;
+            this.currentDate = { date: {year:0, month: 0, day: 0} };
+            this.type = '';
+
             this.http.get(this.baseUrl + 'api/Expenses').subscribe(result => {
                 this.data = result.json() as Expenditure[];
             }, error => console.error(error));
+
         }, error => console.error(error));
         this.modalService.close(id);
     }
