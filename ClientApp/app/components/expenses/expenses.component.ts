@@ -1,5 +1,6 @@
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, ViewChild } from '@angular/core';
 import { Http } from '@angular/http';
+import {NgForm} from '@angular/forms';
 import {IOption} from 'ng-select';
 import {IMyDpOptions} from 'mydatepicker';
 
@@ -13,6 +14,7 @@ import { ModalService } from '../modal/modal.service';
 })
 export class ExpensesComponent {
     public data: Expenditure[];
+    @ViewChild('ngForm') form: NgForm;
     
     types: Array<IOption> = [
         {label: 'Leisure', value: 'Leisure'},
@@ -43,7 +45,9 @@ export class ExpensesComponent {
         }, error => console.error(error));
     }
 
-    save(id: string){
+    save(event: Event, id: string){
+        event.preventDefault();
+
         var month = (this.currentDate.date.month < 10 ? '0' + this.currentDate.date.month : this.currentDate.date.month);
         var day = (this.currentDate.date.day < 10 ? '0' + this.currentDate.date.day : this.currentDate.date.day);
 

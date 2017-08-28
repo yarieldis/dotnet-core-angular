@@ -28,6 +28,7 @@
     <div class="modal">
         <div class="modal-body">
             <div class="container">
+                <form #ngForm="ngForm" class="form-horizontal" (submit)="save($event, 'expense-modal')" novalidate>
                 <h1 *ngIf="!expenseId" class="well">Add Expense</h1>
                 <h1 *ngIf="expenseId" class="well">Edit Expense</h1>
                 <div class="row">
@@ -36,29 +37,45 @@
                         <div class="row">
                             <div class="col-md-6">Description</div>
                             <div class="col-md-6">
-                                <input [(ngModel)]="description" class="form-control input-md" type="text">
+                                <input [(ngModel)]="description" class="form-control input-md" type="text"
+                                #vDescription="ngModel" id="description" type="text" name="description"
+                                autofocus required placeholder="Description"
+                                [ngClass]="{'valid': !vDescription.errors && vDescription.touched, 'invalid': vDescription.errors && vDescription.touched}">
+                                <div id="description-error" class="form-error" *ngIf="vDescription.touched && vDescription.errors">
+                                    <span *ngIf="vDescription.errors.required">Description is required</span>
+                                </div>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-6">Amount</div>
                             <div class="col-md-6">
-                                <input [(ngModel)]="amount" class="form-control input-md" type="text">
+                                <input [(ngModel)]="amount" class="form-control input-md" type="text" [restrictTo]="vType.value"
+                                #vAmount="ngModel" id="amount" type="text" name="amount"
+                                autofocus required placeholder="Amount"
+                                [ngClass]="{'valid': !vAmount.errors && vAmount.touched, 'invalid': vAmount.errors && vAmount.touched}">
+                                <div id="amount-error" class="form-error" *ngIf="vAmount.touched && vAmount.errors">
+                                    <span *ngIf="vAmount.errors.required">Amount is required</span>
+                                    <span *ngIf="vAmount.errors.restrictTo">This amount is not allowed with selected type</span>
+                                </div>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-6">Date</div>
                             <div class="col-md-6">
-                                <my-date-picker name="mydate" [options]="myDatePickerOptions"
-                                    [(ngModel)]="currentDate" required></my-date-picker>
+                                <my-date-picker name="currentDate" [options]="myDatePickerOptions" #vDate="ngModel" id="currentDate"
+                                    [(ngModel)]="currentDate"></my-date-picker>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-6">Type</div>
                             <div class="col-md-6">
-                                <ng-select
-                                    [options]="types"
-                                    [(ngModel)]="type">
+                                <ng-select [options]="types" [(ngModel)]="type" [restrictTo]="vAmount.value"
+                                #vType="ngModel" id="type" name="type"
+                                [ngClass]="{'valid': !vType.errors && vType.touched, 'invalid': vType.errors && vType.touched}">
                                 </ng-select>
+                                <div id="type-error" class="form-error" *ngIf="vType.touched && vType.errors">
+                                    <span *ngIf="vType.errors.restrictTo">This type is not allowed with current amount</span>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -66,9 +83,10 @@
                 </div>
                 <br/>
                 <div class="well">
-                    <button class="btn btn-success" (click)="save('expense-modal');">Save</button>
+                    <button class="btn btn-success" type="submit">Save</button>
                     <button class="btn btn-danger" (click)="closeModal('expense-modal');">Cancel</button>
                 </div>
+                </form>
             </div>
         </div>
     </div>
