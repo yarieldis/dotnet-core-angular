@@ -1,6 +1,6 @@
 <h1>Manage Expenses</h1>
 <p *ngIf="!data"><em>Loading...</em></p>
-<button (click)="openModal('custom-modal-1')" class="btn btn-primary btn-add-new">Add New</button>
+<button (click)="openModal('expense-modal')" class="btn btn-primary btn-add-new">Add New</button>
 <table class='table table-bordered table-expenses' *ngIf="data" [mfData]="data" #mf="mfDataTable">
     <thead>
         <tr>
@@ -18,13 +18,13 @@
             <td>{{ expense.amount }}</td>
             <td>{{ expense.date }}</td>
             <td>{{ expense.type }}</td>
-            <td><button class="btn">Edit</button></td>
-            <td><button class="btn btn-danger" (click)="openDeleteModal('delete-modal', expense.id)">Delete</button></td>
+            <td><button class="btn" (click)="openModal('expense-modal', expense.id)">Edit</button></td>
+            <td><button class="btn btn-danger" (click)="openModal('delete-modal', expense.id)">Delete</button></td>
         </tr>
     </tbody>
 </table>
 
-<modal id="custom-modal-1">
+<modal id="expense-modal">
     <div class="modal">
         <div class="modal-body">
             <div class="container">
@@ -65,8 +65,8 @@
                 </div>
                 <br/>
                 <div class="well">
-                    <button class="btn btn-success" (click)="save('custom-modal-1');">Save</button>
-                    <button class="btn btn-danger" (click)="closeModal('custom-modal-1');">Cancel</button>
+                    <button class="btn btn-success" (click)="save('expense-modal');">Save</button>
+                    <button class="btn btn-danger" (click)="closeModal('expense-modal');">Cancel</button>
                 </div>
             </div>
         </div>

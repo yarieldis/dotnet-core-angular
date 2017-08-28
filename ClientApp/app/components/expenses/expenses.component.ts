@@ -81,13 +81,9 @@ export class ExpensesComponent {
         this.modalService.close(modalId);
     }
 
-    openDeleteModal(modalId: string, expenseId: number){
+    openModal(modalId: string, expenseId: number = 0){
         this.expenseId = expenseId;
         this.modalService.open(modalId);
-    }
-
-    openModal(id: string){
-        this.modalService.open(id);
     }
 
     closeModal(id: string){
