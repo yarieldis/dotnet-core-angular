@@ -12,15 +12,6 @@ namespace test_angular.Controllers
     public class ExpensesController : Controller
     {
         private readonly ApplicationDbContext _context;
-        private static string[] Summaries = new[]
-        {
-            "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-        };
-        private static string[] Types = new[]
-        {
-            "Leisure", "Insurance", "Education", "Medical"
-        };
-
         public ExpensesController(ApplicationDbContext context)
         {
             _context = context;
@@ -31,12 +22,11 @@ namespace test_angular.Controllers
             return _context.Expense.AsEnumerable().Select(expense => new Expenditure{
                 Description = expense.Description,
                 Amount = expense.Amount,
-                Date = expense.Date.ToLongDateString(),
+                Date = expense.Date.ToString("yyyy-mm-dd"),
                 Type = expense.Type,
                 Id = expense.ID
             });
         }
-
         [HttpGet("{id}")]
         public Expenditure Get(int? id)
         {
@@ -44,13 +34,11 @@ namespace test_angular.Controllers
             {
                 return null;
             }
-
             var expense =  _context.Expense.SingleOrDefault(m => m.ID == id);
             if (expense == null)
             {
                 return null;
             }
-
             return new Expenditure {
                 Description = expense.Description,
                 Amount = expense.Amount,
@@ -59,7 +47,6 @@ namespace test_angular.Controllers
                 Id = expense.ID
             };
         }
-
         [HttpPost]
         public void Post([FromBody]Expenditure value)
         {
@@ -72,7 +59,6 @@ namespace test_angular.Controllers
             _context.Add(expense);
             _context.SaveChanges();
         }
-
         [HttpPut("{id}")]
         public void Put(int? id, [FromBody]Expenditure value)
         {
@@ -91,7 +77,6 @@ namespace test_angular.Controllers
                 }
             }
         }
-
         [HttpDelete("{id}")]
         public void Delete(int? id)
         {
@@ -105,7 +90,6 @@ namespace test_angular.Controllers
                 }
             }
         }
-
         public class Expenditure
         {
             public int Id { get; set; }
