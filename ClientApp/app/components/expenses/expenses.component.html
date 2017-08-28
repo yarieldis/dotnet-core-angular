@@ -18,8 +18,8 @@
             <td>{{ expense.amount }}</td>
             <td>{{ expense.date }}</td>
             <td>{{ expense.type }}</td>
-            <td><button class="btn" (click)="openModal('expense-modal', expense.id)">Edit</button></td>
-            <td><button class="btn btn-danger" (click)="openModal('delete-modal', expense.id)">Delete</button></td>
+            <td><button class="btn" (click)="openEditModal('expense-modal', expense)">Edit</button></td>
+            <td><button class="btn btn-danger" (click)="openDeleteModal('delete-modal', expense.id)">Delete</button></td>
         </tr>
     </tbody>
 </table>

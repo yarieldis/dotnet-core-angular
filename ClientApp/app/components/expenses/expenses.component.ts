@@ -44,45 +44,71 @@ export class ExpensesComponent {
     }
 
     save(id: string){
+        var month = (this.currentDate.date.month < 10 ? '0' + this.currentDate.date.month : this.currentDate.date.month);
+        var day = (this.currentDate.date.day < 10 ? '0' + this.currentDate.date.day : this.currentDate.date.day);
+
         var expense = {
+            id: this.expenseId,
             description: this.description,
             amount: this.amount,
-            date: this.currentDate.date.year + '-' + this.currentDate.date.month + '-' + this.currentDate.date.day,
+            date: this.currentDate.date.year + '-' + month + '-' + day,
             type: this.type
         } as Expenditure;
 
-        this.http.post(this.baseUrl + 'api/Expenses', expense).subscribe(result => {
-            this.data = [];
-            
-            this.description = '';
-            this.amount = 0;
-            this.currentDate = { date: {year:0, month: 0, day: 0} };
-            this.type = '';
+        console.log(expense);
 
-            this.http.get(this.baseUrl + 'api/Expenses').subscribe(result => {
-                this.data = result.json() as Expenditure[];
-            }, error => console.error(error));
-
-        }, error => console.error(error));
+        if (expense.id == 0) {
+            this.http.post(this.baseUrl + 'api/Expenses', expense).subscribe(
+                result => this.reload(), error => console.error(error)
+            );    
+        } else {
+            this.http.put(this.baseUrl + 'api/Expenses/' + expense.id, expense).subscribe(
+                result => this.reload(), error => console.error(error)
+            );
+        }
         this.modalService.close(id);
     }
 
-    delete(modalId: string, expenseId: number){
-        this.http.delete(this.baseUrl + 'api/Expenses/' + expenseId).subscribe(result => {
-            this.data = [];
+    reload(){
+        this.data = [];
+        this.expenseId = 0;
+        this.description = '';
+        this.amount = 0;
+        this.currentDate = { date: {year:0, month: 0, day: 0} };
+        this.type = '';
 
-            this.expenseId = 0;
-            
-            this.http.get(this.baseUrl + 'api/Expenses').subscribe(result => {
-                this.data = result.json() as Expenditure[];
-            }, error => console.error(error));
-
+        this.http.get(this.baseUrl + 'api/Expenses').subscribe(result => {
+            this.data = result.json() as Expenditure[];
         }, error => console.error(error));
+    }
+
+    delete(modalId: string, expenseId: number){
+        this.http.delete(this.baseUrl + 'api/Expenses/' + expenseId).subscribe(
+            result => this.reload(), error => console.error(error)
+        );
         this.modalService.close(modalId);
     }
 
-    openModal(modalId: string, expenseId: number = 0){
+    openEditModal(modalId: string, expense: Expenditure){
+        this.expenseId = expense.id;
+        this.description = expense.description;
+        this.amount = expense.amount;
+        let currentDate = expense.date.split('-');
+        this.currentDate = { date: {
+            year:parseInt(currentDate[0]),
+            month: parseInt(currentDate[1]),
+            day: parseInt(currentDate[2])
+        }};
+        this.type = expense.type;
+        this.modalService.open(modalId);
+    }
+
+    openDeleteModal(modalId: string, expenseId: number){
         this.expenseId = expenseId;
+        this.modalService.open(modalId);
+    }
+
+    openModal(modalId: string){
         this.modalService.open(modalId);
     }
 
@@ -93,11 +119,12 @@ export class ExpensesComponent {
 
 interface DateFormat {
     date: {
-    year: number;
-    month: number;
-    day: number;
+        year: number;
+        month: number;
+        day: number;
     };
 }
+
 interface Expenditure {
     id: number;
     description: string;
