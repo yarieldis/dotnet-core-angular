@@ -14,11 +14,14 @@ import { ModalComponent } from './components/modal/modal.component';
 
 import { ModalService } from './components/modal/modal.service';
 
+import { TypeAmountValidatorDirective } from './directives/type.amount.directive';
+
 @NgModule({
     declarations: [
         AppComponent,
         ModalComponent,
-        ExpensesComponent
+        ExpensesComponent,
+        TypeAmountValidatorDirective
     ],
     imports: [
         CommonModule,
