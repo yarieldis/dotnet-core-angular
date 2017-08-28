@@ -22,7 +22,7 @@ namespace test_angular.Controllers
             return _context.Expense.AsEnumerable().Select(expense => new Expenditure{
                 Description = expense.Description,
                 Amount = expense.Amount,
-                Date = expense.Date.ToString("yyyy-mm-dd"),
+                Date = expense.Date.ToString("yyyy-MM-dd"),
                 Type = expense.Type,
                 Id = expense.ID
             });
@@ -42,7 +42,7 @@ namespace test_angular.Controllers
             return new Expenditure {
                 Description = expense.Description,
                 Amount = expense.Amount,
-                Date = expense.Date.ToLongDateString(),
+                Date = expense.Date.ToString("yyyy-MM-dd"),
                 Type = expense.Type,
                 Id = expense.ID
             };
